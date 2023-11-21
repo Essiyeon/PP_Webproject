@@ -1,13 +1,3 @@
-/*2023-11-20 First Commit    
-터미널에서
-PS C:\WebPro1\PP_Webproject\webpro1> node webpro1.js
-하면 Server is running at http://localhost:5500 하고 서버열림
-불러오기 버튼 누르면 기사제목 크롤링됨
-but url기능 없음(클릭시본문연결), 이미지없음
-
-2023-11-21 First Commit
-불러오기 버튼 없앰, 이미지 추가*/
-
 const express = require('express');
 const puppeteer = require('puppeteer');
 
