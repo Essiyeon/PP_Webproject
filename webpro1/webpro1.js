@@ -5,8 +5,10 @@ PS C:\WebPro1\PP_Webproject\webpro1> node webpro1.js
 불러오기 버튼 누르면 기사제목 크롤링됨
 but url기능 없음(클릭시본문연결), 이미지없음
 
-2023-11-21 First Commit
-불러오기 버튼 없앰, 이미지 추가*/
+2023-11-21 
+First Commit 불러오기 버튼 없앰, 이미지 추가
+Second Commit 기사 제목 클릭시 본문으로 이동*/
+
 
 const express = require('express');
 const puppeteer = require('puppeteer');
@@ -24,7 +26,7 @@ app.get('/', async (req, res) => {
 async function fetchData() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto('https://news.naver.com/main/list.naver?mode=LS2D&mid=shm&sid1=105&sid2=230&page=1');
+    await page.goto('https://news.naver.com/main/list.naver?mode=LS2D&mid=shm&sid1=105&sid2=230');
 
     const titlesAndImages = await page.evaluate(() => {
         const data = [];
@@ -33,7 +35,9 @@ async function fetchData() {
         titleElements.forEach((img) => {
             const title = img.alt;
             const imageUrl = img.src;
-            data.push({ title, imageUrl });
+            const articleUrl = img.closest('a').href; // 수정된 부분
+
+            data.push({ title, imageUrl, articleUrl });
         });
 
         return data;
@@ -45,7 +49,14 @@ async function fetchData() {
 }
 
 function renderHTML(titlesAndImages) {
-    const items = titlesAndImages.map(item => `<li><img src="${item.imageUrl}" alt="${item.title}"><br>${item.title}</li>`).join('');
+    const items = titlesAndImages.map(item => `
+        <li>
+            <a href="${item.articleUrl}" target="_blank">
+                <img src="${item.imageUrl}" alt="${item.title}">
+                <br>${item.title}
+            </a>
+        </li>
+    `).join('');
 
     return `
         <!DOCTYPE html>
@@ -66,3 +77,4 @@ function renderHTML(titlesAndImages) {
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
+

@@ -1,3 +1,4 @@
+
 const express = require('express');
 const puppeteer = require('puppeteer');
 
@@ -14,7 +15,7 @@ app.get('/', async (req, res) => {
 async function fetchData() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto('https://news.naver.com/main/list.naver?mode=LS2D&mid=shm&sid1=105&sid2=230&page=1');
+    await page.goto('https://news.naver.com/main/list.naver?mode=LS2D&mid=shm&sid1=105&sid2=230');
 
     const titlesAndImages = await page.evaluate(() => {
         const data = [];
@@ -23,7 +24,9 @@ async function fetchData() {
         titleElements.forEach((img) => {
             const title = img.alt;
             const imageUrl = img.src;
-            data.push({ title, imageUrl });
+            const articleUrl = img.closest('a').href; // 수정된 부분
+
+            data.push({ title, imageUrl, articleUrl });
         });
 
         return data;
@@ -35,7 +38,14 @@ async function fetchData() {
 }
 
 function renderHTML(titlesAndImages) {
-    const items = titlesAndImages.map(item => `<li><img src="${item.imageUrl}" alt="${item.title}"><br>${item.title}</li>`).join('');
+    const items = titlesAndImages.map(item => `
+        <li>
+            <a href="${item.articleUrl}" target="_blank">
+                <img src="${item.imageUrl}" alt="${item.title}">
+                <br>${item.title}
+            </a>
+        </li>
+    `).join('');
 
     return `
         <!DOCTYPE html>
