@@ -3,7 +3,8 @@
 but url기능 없음(클릭시본문연결), 이미지없음, webpro1.js파일 먼저 실행해야함 
 2023-11-21 
 First Commit 불러오기 버튼 없앰, 이미지 추가
-Second Commit 기사 제목 클릭시 본문으로 이동* -->
+Second Commit 기사 제목 클릭시 본문으로 이동
+3rd Commit 새로고침버튼추가 (업데이트된 기사 있으면 리로드)-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,13 +14,24 @@ Second Commit 기사 제목 클릭시 본문으로 이동* -->
     <title>Naver News Crawling</title>
 </head>
 <body>
+    <h1>Naver News Crawling</h1>
+    <button id="refreshButton">새로고침</button>
+    <ul id="newsList"></ul>
+
     <script>
-        fetch('http://localhost:5500')
-            .then(response => response.text())
-            .then(html => {
-                document.body.innerHTML = html;
-            })
-            .catch(error => console.error('Error fetching data:', error));
+        async function fetchDataAndRender() {
+            const response = await fetch('http://localhost:5500/refresh');
+            if (response.ok) {
+                const data = await response.json();
+                const items = data.data.map(item => `<li><a href="${item.articleUrl}" target="_blank"><img src="${item.imageUrl}" alt="${item.title}"><br>${item.title}</a></li>`).join('');
+                document.getElementById('newsList').innerHTML = items;
+            }
+        }
+
+        document.getElementById('refreshButton').addEventListener('click', fetchDataAndRender);
+
+        // Initial data fetching on page load
+        fetchDataAndRender();
     </script>
 </body>
 </html>
