@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <img class="logo" src="/public/k-on2.png" alt="K-ON! 로고">
+    <title>검색 결과</title>
+    <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+<div class="'container">
+    <div class="searchResults-section">
+        <h1>검색 결과</h1>
+            <!-- 검색 결과를 표시할 섹션 -->
+            <% if (searchResults.length > 0) { %>
+                <ul>
+                    <% for (const item of searchResults) { %>
+                        <li>
+                            <a href="<%= item.link %>" target="_blank">
+                                <%= item.title %><br>
+                                <%= item.description %><br>
+                                <%= item.pubDate %>
+                            </a>
+                        </li>
+                    <% } %>
+                </ul>
+            <% } else { %>
+                <p>검색 결과가 없습니다.</p>
+            <% } %>
+
+            <!-- 돌아가기 버튼 -->
+            <a href="/">메인 페이지로 돌아가기</a>
+    </div>
+</div>  
+</body>
+</html>
