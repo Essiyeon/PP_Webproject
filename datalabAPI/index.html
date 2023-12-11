@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Trends Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart" width="500" height="200"></canvas>
+
+    <script>
+        let myChart;  // 차트 인스턴스를 저장할 변수
+
+        function fetchDataAndDrawChart() {
+            // Fetch data from the server endpoint
+            fetch('/chartData')
+            .then(response => response.json())
+            .then(data => {
+                // Log the received data to the console for debugging
+                console.log('Received Data:', data);
+
+                // Process data and create a chart
+                const ctx = document.getElementById('myChart').getContext('2d');
+
+                // Destroy previous chart if it exists
+                if (myChart) {
+                    myChart.destroy();
+                }
+
+                // Create a new Chart instance
+                myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data[0].data.map(item => item.period),
+                        datasets: [
+                            {
+                                label: '아이폰',
+                                data: data[0].data.map(item => item.ratio),
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1,
+                                fill: false,
+                            },
+                            {
+                                label: '갤럭시',
+                                data: data[1].data.map(item => item.ratio),
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1,
+                                fill: false,
+                            }
+                        ]
+                    },
+                    options: {}
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Call the function when the page loads
+        fetchDataAndDrawChart();
+
+        window.onload = function () {
+            fetchDataAndDrawChart();
+        };
+    </script>
+</body>
+</html>
