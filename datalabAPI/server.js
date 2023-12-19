@@ -12,10 +12,11 @@ const client_id = 'Qjsbi3MIetlWRmDaz6vS';
 const client_secret = 'LVlyDdZNMy';
 const api_url = 'https://openapi.naver.com/v1/datalab/search';
 
-// Move the request_body definition to a more global scope
+const currentDate = new Date().toISOString().split('T')[0];
+
 const request_body = {
     "startDate": "2023-01-01",
-    "endDate": "2023-12-12",
+    "endDate": currentDate,
     "timeUnit": "month",
     "keywordGroups": [
         {
@@ -35,40 +36,14 @@ const request_body = {
             ]
         }
     ],
-    "device": "pc",
-    "ages": [
-        "1",
-        "2"
-    ],
-    "gender": "f"
 };
 
-app.post('/getSearchData', function (req, res) {
-    // Use the globally defined request_body
-    request.post({
-        url: api_url,
-        body: JSON.stringify(request_body),
-        headers: {
-            'X-Naver-Client-Id': client_id,
-            'X-Naver-Client-Secret': client_secret,
-            'Content-Type': 'application/json',
-        },
-    }, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            const data = JSON.parse(body).results;
-            res.json(data);
-        } else {
-            res.status(response.statusCode).send(error);
-        }
-    });
-});
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/chartData', function (req, res) {
-    // Use the globally defined request_body
     request.post({
         url: api_url,
         body: JSON.stringify(request_body),

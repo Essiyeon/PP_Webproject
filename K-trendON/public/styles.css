@@ -95,14 +95,13 @@ ul {
     padding: 0;
 }
 
-/* 각 기사에 구분선 추가 */
+/* 각 기사마다 여백 추가 */
 li {
     border-bottom: 1px solid #ccc;
     margin-bottom: 20px; /* 각 기사 간 간격 조절 */
     padding-bottom: 20px; /* 각 기사 내 여백 조절 */
 }
 
-/* 마지막 기사의 구분선 제거 */
 li:last-child {
     border-bottom: none;
     margin-bottom: 0;

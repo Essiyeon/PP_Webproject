@@ -8,7 +8,7 @@ const app = express();
 const port = 3000;
 
 let cachedData = null;
-//app.use(express.static('public'));
+
 app.use(express.static(__dirname +'/public', { ignore: ['/favicon.ico'] }));
 app.use('/public', express.static(path.join(__dirname, 'public'), { 'Content-Type': 'text/css' }));
 app.use(bodyParser.urlencoded({ extended: true }));
