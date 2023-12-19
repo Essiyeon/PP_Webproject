@@ -29,12 +29,7 @@ Practical Programming Web project (2023.11.07~2023.12.12)
 * server.js
 
 ### - K-trendON
-<p align="center">
-  <img src="https://github.com/Essiyeon/PP_Webproject/assets/100012844/0a34850a-76b7-4f10-8300-12426f3fe97f" width="200" height="100"/>
-</p>
-<p align="center">
-  <뉴스 크롤링, 뉴스검색 등 트렌드 파악 웹사이트 구현하기>
-</p>
+<뉴스 크롤링, 뉴스검색 등 트렌드 파악 웹사이트 구현하기>
 
 ![image](https://github.com/Essiyeon/PP_Webproject/assets/100012844/99c0e297-83e6-4129-a380-d576c2cae22a)
 ![image](https://github.com/Essiyeon/PP_Webproject/assets/100012844/d85bd6b7-a370-4067-bd34-b2d128172f20)
